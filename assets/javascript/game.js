@@ -56,21 +56,19 @@ window.onload = function() {
                     document.getElementById("wins").innerHTML = numOfWins;
                     alert("you win");
                     initialize();
-                }
-                
-            } else {
-               
-                if (numOfLeft<=0) {
-                    alert("lost")
+                } else if (numOfLeft <=0) {
+                    alert("lost");
                     initialize();
                 }
-            }
-        } else {
-            
-            if (numOfLeft<=0) {
+                
+            } else if (numOfLeft <= 0) {
                 alert("lost");
                 initialize();
             }
+            
+        } else  if (numOfLeft<=0) {   
+            alert("lost");
+            initialize();               
         }
 
             function getAllIndexes(arr,val) {
