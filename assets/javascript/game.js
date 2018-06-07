@@ -1,57 +1,28 @@
+var numOfWins = 0;
+var wordTochoose = ["cavaliers", "warriors", "lakers", "rockets","spurs"];
+
 window.onload = function() {
-    var wordTochoose = ["cavaliers", "warriors", "lakers", "rockets","spurs"];
-    var wordChosen;
 
-    // randomly choose a word
-    var randomNu = Math.floor(Math.random()*wordTochoose.length);
-        console.log(randomNu);
-        wordChosen = wordTochoose[randomNu];
-        console.log(wordChosen);
-    
-
-    // put the word chosen in wordChosenarray; word guessed in wordGuessarray
-    // Define an arrany "letterTried" to store letters tried
-    var wordChosenarray = wordChosen.split("");
-        console.log(wordChosenarray);
-    var arrayLength = wordChosenarray.length;
-        console.log (arrayLength);   
+    var wordChosenarray = [];
     var wordGuessarray = [];
-        wordGuessarray.length=arrayLength;
-        console.log(wordGuessarray.length);
-    var letterTried = [];
+    var arrayLength;
 
-    // var parent3 = document.getElementById("div3");
-    //     console.log(parent3);
-    // var child3  = document.getElementById("p3");
-    //     console.log(child3);
-    var numOfLeft = 10;
-    var numOfWins = 0;
+    var letterTried =[];
+    var keyIndexes = [];
 
-        for (i=0; i<arrayLength; i++) {
-            wordGuessarray[i] = " _ ";
-        }
-        console.log(wordGuessarray);
+    var numOfLeft;
 
-        var element = document.getElementById("p1");
+    initialize();
+   
         
-        for (i=0; i<arrayLength; i++) {
-            var content = " _ ";
-            var nodeText = document.createTextNode(content);
-            element.appendChild(nodeText);
-        }
-
-        document.getElementById("wins").innerHTML = numOfWins;
-        document.getElementById("p2").innerHTML = numOfLeft;
-
-    
     window.onkeyup = function(event) {
-        numOfLeft--;
+        numOfLeft=numOfLeft-1;
         document.getElementById("p2").innerHTML = numOfLeft;
-
+        //debugger;
         var parent1 = document.getElementById("div1");
-        console.log(parent3);
+        console.log(parent1);
         var child1  = document.getElementById("p1");
-        console.log(child3);
+        console.log(child1);
         var parent3 = document.getElementById("div3");
         console.log(parent3);
         var child3  = document.getElementById("p3");
@@ -77,28 +48,28 @@ window.onload = function() {
                 pushWordGuess(keyIndexes);
                 console.log(wordGuessarray);
 
-                
-
-                //replaceWordGuess(wordGuessarray);
                 displayArray(wordGuessarray,parent1,child1);
-
+                //debugger;
                 console.log (arrayEqual(wordChosenarray,wordGuessarray));
                 if (arrayEqual(wordChosenarray,wordGuessarray)) {
                     numOfWins++;
                     document.getElementById("wins").innerHTML = numOfWins;
                     alert("you win");
+                    initialize();
                 }
                 
             } else {
-                //alert("you lost 1 live");
+               
                 if (numOfLeft<=0) {
                     alert("lost")
+                    initialize();
                 }
             }
         } else {
-            //alert("you lost 1 live!");
+            
             if (numOfLeft<=0) {
                 alert("lost");
+                initialize();
             }
         }
 
@@ -109,28 +80,14 @@ window.onload = function() {
                 }
                 return indexes;
             } 
+
             function pushWordGuess(indexes) {
                 for (i=0; i<indexes.length;i++) {
                     var index = parseInt(indexes[i]);
                     wordGuessarray[index]=keyTyped;
                 }
             }
-            // function replaceWordGuess(arr) {
-            //     var parent = document.getElementById("div1");
-            //     console.log(parent);
-            //     var oldChild = document.getElementById("p1");
-            //     console.log(p1);
-            //     var newChild = document.createElement("p");
-            //         newChild.setAttribute("id","p1");
-
-            //     for (i=0; i<arr.length; i++) {
-            //         var content =" " + arr[i] + " ";
-            //         console.log(content);
-            //         var textNode = document.createTextNode(content);   
-            //         newChild.appendChild(textNode);    
-            //         }      
-            //     parent.replaceChild(newChild,oldChild);
-            // }
+            
             function displayArray(arr,parent,child) {
                 var oldChild = child;
                     console.log(oldChild);
@@ -148,6 +105,7 @@ window.onload = function() {
                         console.log(newChild);     
                     parent.replaceChild(newChild,oldChild);
             }
+
             function arrayEqual(arr1,arr2) {
                 for (var i=0; i<arr1.length; i++){
                     if (arr1[i] !== arr2[i]) {
@@ -156,6 +114,42 @@ window.onload = function() {
                 } 
                 return true;
             }
+    }
+    function initialize() {
+        var wordChosen;
+
+        // randomly choose a word
+        var randomNu = Math.floor(Math.random()*wordTochoose.length);
+            console.log(randomNu);
+            wordChosen = wordTochoose[randomNu];
+            console.log(wordChosen);
+        
+
+        // put the word chosen in wordChosenarray; word guessed in wordGuessarray
+        // Define an arrany "letterTried" to store letters tried
+            wordChosenarray = wordChosen.split("");
+            console.log(wordChosenarray);
+        var arrayLength = wordChosenarray.length;
+            console.log (arrayLength);   
+
+            wordGuessarray.length=arrayLength;
+            console.log(wordGuessarray.length);
+            letterTried = [];
+        
+            numOfLeft = 10;
+        
+
+            for (i=0; i<arrayLength; i++) {
+                wordGuessarray[i] = " _ ";
+            }
+            console.log(wordGuessarray);
+
+            document.getElementById("p1").innerHTML = wordGuessarray.join("");
+            document.getElementById("p3").innerHTML = letterTried.join("");
+            document.getElementById("wins").innerHTML = numOfWins;
+            document.getElementById("p2").innerHTML = numOfLeft;
+
+
     }
     
 }
